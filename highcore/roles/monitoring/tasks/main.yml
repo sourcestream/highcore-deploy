@@ -1,0 +1,22 @@
+---
+- name: Install git-core
+  action: '{{ ansible_pkg_mgr }} pkg={{ item }}'
+  with_items:
+    - git-core
+
+- name: create dirs for sensu extensions
+  file: state=directory path=/etc/sensu/{{ item }} recurse=yes
+  with_items:
+    - extensions/checks
+    - extensions/handlers
+    - extensions/mutators
+    - checks
+    - handlers
+    - mutators
+
+- name: install gem prerequisites
+  apt: name={{ item }} state=present
+  with_items: [build-essential, g++, ruby-dev]
+
+- include: handlers/metrics_relay.yml
+- include: checks/metrics.yml

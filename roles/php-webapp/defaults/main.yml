@@ -1,0 +1,10 @@
+---
+php_webapp_app: php-webapp
+php_webapp_user: '{{ php_webapp_app }}'
+php_webapp_deploy_to: '/srv/{{ php_webapp_app }}'
+php_webapp_deploy_version: 'master'
+php_webapp_root: '{{ php_webapp_deploy_to }}/{{ php_webapp_deploy_to }}'
+php_webapp_repository: '{{ scm_url }}'
+php_webapp_vhost_template: ../../php-webapp/templates/webserver/vhost.j2
+php_webapp_port: 80
+php_webapp_basic_auth: ''

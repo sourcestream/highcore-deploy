@@ -1,0 +1,4 @@
+- name: restart ui
+  service:
+    name: '{{ ui_app }}'
+    state: restarted

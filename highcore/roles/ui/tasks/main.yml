@@ -1,0 +1,25 @@
+---
+- name: Install npm dependencies
+  npm:
+    path: '{{ ui_deploy_to }}/{{ ui_deploy_version }}'
+    state: latest
+  sudo_user: '{{ ui_user }}'
+
+- name: Bower install
+  command: bower install
+  args:
+    chdir: '{{ ui_deploy_to }}/{{ ui_deploy_version }}'
+  sudo_user: '{{ ui_user }}'
+
+- name: Grunt build
+  command: grunt build
+  args:
+    chdir: '{{ ui_deploy_to }}/{{ ui_deploy_version }}'
+  sudo_user: '{{ ui_user }}'
+
+- name: Create upstart script
+  template:
+    src: upstart.j2
+    dest: '/etc/init/{{ ui_app }}.conf'
+    mode: 0700
+  notify: restart ui

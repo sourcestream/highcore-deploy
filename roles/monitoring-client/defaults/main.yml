@@ -1,0 +1,11 @@
+---
+standalone_checks: {}
+client_settings: {}
+system_profile: false
+sensu_system_profile_version: ab29feda43bafcf4207ef4ac238214cf70e800e9 #master @ 4.05.2015
+monitoring_port: 5671
+monitoring_insecure: true
+monitoring_hostname: localhost
+monitoring_user: sensu
+monitoring_password: placeholder
+monitoring_vhost: /sensu

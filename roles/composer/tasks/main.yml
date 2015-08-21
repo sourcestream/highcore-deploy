@@ -1,0 +1,10 @@
+---
+- name: Download composer.phar
+  get_url:
+    url: '{{ composer_url }}'
+    dest: /usr/local/bin/composer
+    mode: a+x
+
+- name: make composer executable
+  file: path=/usr/local/bin/composer mode=a+x state=file
+  tags: composer

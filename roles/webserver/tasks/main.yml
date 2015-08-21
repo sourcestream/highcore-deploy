@@ -1,0 +1,44 @@
+---
+- name: Install dependencies
+  action: "{{ ansible_pkg_mgr }} pkg={{ item }}"
+  with_items:
+    - nginx
+
+- name: Create nginx config file
+  template:
+    src: "{{ webserver_vhost_file }}"
+    dest: /etc/nginx/sites-available/{{ webserver_vhost }}
+  notify:
+  - restart nginx
+
+- name: Disable default vhost
+  file: path=/etc/nginx/sites-enabled/default state=absent
+  notify:
+  - restart nginx
+
+- name: Enable vhost
+  file: src=/etc/nginx/sites-available/{{ webserver_vhost }}
+        dest=/etc/nginx/sites-enabled/{{ webserver_vhost }}
+        state=link
+  notify:
+  - restart nginx
+
+- name: Encrypt basic auth
+  shell: 'printf "{{ webserver_basic_auth.split(":") | first }}:`openssl passwd -apr1 "{{ webserver_basic_auth.split(":") | last }}"`\n"'
+  register: webserver_basic_auth_encrypted_shell
+  when: webserver_basic_auth != ''
+  changed_when: no
+  no_log: True
+
+- name: Enable basic auth
+  template: src=htpasswd.j2 dest=/etc/nginx/.htpasswd
+  when: webserver_basic_auth != ''
+  notify:
+  - restart nginx
+
+- name: Ensure nginx is started
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+

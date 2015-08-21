@@ -1,0 +1,16 @@
+---
+allow_duplicates: yes
+dependencies:
+  - role: '{{ playbook_dir }}/roles/deploy'
+    deploy_user: "{{ php_webapp_user }}"
+    deploy_to: "{{ php_webapp_deploy_to }}"
+    deploy_version: "{{ php_webapp_deploy_version }}"
+    deploy_repository: "{{ php_webapp_repository }}"
+  - role: '{{ playbook_dir }}/roles/composer'
+  - role: '{{ playbook_dir }}/roles/php5-fpm'
+  - role: '{{ playbook_dir }}/roles/webserver'
+    webserver_port: '{{ php_webapp_port }}'
+    webserver_vhost: "{{ php_webapp_app }}"
+    webserver_vhost_file: "{{ php_webapp_vhost_template }}"
+    webserver_root: "{{ php_webapp_root }}"
+    webserver_basic_auth: '{{ php_webapp_basic_auth }}'

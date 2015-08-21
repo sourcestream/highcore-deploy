@@ -1,0 +1,23 @@
+---
+- name: Install dependencies
+  action: "{{ ansible_pkg_mgr }} pkg={{ item }}"
+  with_items:
+    - mcrypt
+    - php5-cli
+    - php5-mcrypt
+    - php5-json
+    - php5-curl
+    - php5-mysql
+  notify:
+  - restart php5-fpm
+
+- name: Enable PHP packages
+  sudo: yes
+  command: /usr/sbin/php5enmod {{ item }} creates=/etc/php5/cli/conf.d/20-{{ item }}.ini
+  with_items:
+    - mcrypt
+  notify: restart php5-fpm
+
+- name: Symlink checkout to webroot
+  when: '"{{ php_webapp_deploy_to }}/{{ php_webapp_deploy_version }}" != "{{ php_webapp_root }}"'
+  file: src='{{ php_webapp_deploy_to }}/{{ php_webapp_deploy_version }}' dest='{{ php_webapp_root }}' state=link

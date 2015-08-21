@@ -1,0 +1,3 @@
+# TODO use service module on ansible versions that include this fix https://github.com/ansible/ansible-modules-core/issues/1170
+- name: restart php5-fpm
+  shell: service php5-fpm restart

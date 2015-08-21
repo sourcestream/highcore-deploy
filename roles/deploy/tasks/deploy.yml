@@ -1,0 +1,16 @@
+---
+- name: Clean up deployment path
+  include: clean.yml
+
+- name: Unarchive artifact
+  include: "packaging/unarchive.yml"
+  when: packaging in ['zip', 'tar.gz']
+
+- name: Ensure ownership
+  file: path={{ deploy_to }}
+        state=directory
+        owner={{ deploy_user }}
+        group={{ deploy_group }}
+        mode=u+rwX,g+rX,{{ deploy_user }}-w,o-r
+        recurse=yes
+

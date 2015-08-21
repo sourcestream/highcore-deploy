@@ -1,0 +1,40 @@
+---
+- name: Install git-core
+  action: '{{ ansible_pkg_mgr }} pkg={{ item }}'
+  with_items:
+    - git-core
+
+- name: Create ssh directory
+  file:
+    path: '{{ deploy_to }}/.ssh'
+    state: directory
+    owner: '{{ deploy_user }}'
+
+- name: Install private key
+  copy:
+    content: '{{ deploy_key }}'
+    dest: '{{ deploy_to }}/.ssh/id_rsa'
+    mode: 0600
+  when: deploy_key is defined
+  sudo_user: '{{ deploy_user }}'
+  when: deploy_key is defined and deploy_key
+
+- name: Configure known host
+  lineinfile:
+    line: '{{ deploy_known_hosts }}'
+    dest: '{{ deploy_to }}/.ssh/known_hosts'
+    create: yes
+    mode: 0600
+  sudo_user: '{{ deploy_user }}'
+  when: deploy_known_hosts is defined
+
+- name: Checkout git repository
+  git:
+    repo: '{{ deploy_repository }}'
+    dest: '{{ deploy_to }}/{{ deploy_version }}'
+    version: '{{ deploy_version }}'
+    update: '{{ deploy_git_update }}'
+#    TODO: Restore if SHA-ckeckouts work (it requires setting refspec param to refs/heads/<branch>)
+#    TODO: Parametrize it and disable by default
+#    depth: 1
+  sudo_user: '{{ deploy_user }}'

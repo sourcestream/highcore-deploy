@@ -1,0 +1,10 @@
+---
+- name: Install bundler
+  gem:
+    user_install: no
+    name: "{{ item }}"
+    repository: https://rubygems.org
+    include_dependencies: yes
+    state: present
+  with_items:
+    - bundler

@@ -1,0 +1,56 @@
+---
+- name: Install dependencies
+  action: "{{ ansible_pkg_mgr }} pkg={{ item }}"
+  with_items:
+    - mcrypt
+    - php5-cli
+    - php5-mcrypt
+    - php5-json
+    - php5-curl
+    - php5-pgsql
+  notify:
+  - restart php5-fpm
+
+- name: Enable PHP packages
+  sudo: yes
+  command: /usr/sbin/php5enmod {{ item }} creates=/etc/php5/cli/conf.d/20-{{ item }}.ini
+  with_items:
+    - mcrypt
+  notify: restart php5-fpm
+
+- name: Install composer dependencies
+  composer:
+    command: install
+    no_dev: '{{ api_app_env != "local" }}'
+    working_dir: '{{ api_deploy_to }}/{{ api_deploy_version }}'
+  sudo_user: '{{ api_user }}'
+
+- name: Load credentials
+  include_vars: '{{ api_credentials_file }}'
+  no_log: True
+  when: api_credentials_file is defined and api_credentials_file
+
+- name: Configure environment
+  template:
+    src: '{{ api_env_template }}'
+    dest: '{{ api_config_dir }}/.env'
+    owner: '{{ api_user }}'
+    group: www-data
+    mode: 0640
+
+- name: Make storage directory writable for webserver
+  file:
+    dest: '{{ api_deploy_to }}/{{ api_deploy_version }}/storage'
+    owner: '{{ api_user }}'
+    group: www-data
+    state: directory
+    recurse: yes
+    mode: g+rwX
+
+#- name: Execute migration
+#  shell: '{{ api_deploy_to_version }}/ php artisan migrate:refresh --seed'
+#  args:
+#    chdir: '{{ api_deploy_to_version }}'
+#  sudo: yes
+#  sudo_user: '{{ api_user }}'
+#  when: deployment_required and api_migration_strategy == 'Update'

@@ -1,0 +1,5 @@
+---
+- action: "{{ ansible_pkg_mgr }} pkg=php5-xdebug"
+- template: src=xdebug.ini.j2 dest=/etc/php5/mods-available/xdebug.ini
+- command: php5enmod xdebug
+  notify: [restart php5-fpm]

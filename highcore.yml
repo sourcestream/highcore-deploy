@@ -1,0 +1,22 @@
+---
+- hosts: all
+  tags:
+    - common
+  tasks:
+    - name: Update package manager cache
+      action: '{{ ansible_pkg_mgr }}
+        update_cache=yes
+        cache_valid_time=86400' # 1 day
+      sudo: yes
+    - name: Set monitoring hostname
+      set_fact:
+        api_monitoring_hostname: "{{ monitoring_hostname }}"
+        ui_monitoring_hostname: "{{ monitoring_hostname }}"
+      when: monitoring_hostname is defined
+    - name: Set api hostname
+      set_fact:
+        ui_api_host: "{{ api_host }}"
+      when: api_host is defined
+
+- include: highcore/api.yml
+- include: highcore/ui.yml

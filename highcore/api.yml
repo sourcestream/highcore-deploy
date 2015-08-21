@@ -1,0 +1,7 @@
+---
+- hosts: api:tag_role_api
+  tags:
+    - api
+  sudo: yes
+  roles:
+    - api

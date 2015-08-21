@@ -1,0 +1,13 @@
+---
+ui_app: highcore-ui
+ui_user: '{{ ui_app }}'
+ui_deploy_to: '/srv/{{ ui_app }}'
+ui_deploy_version: 'master'
+ui_deploy_to_version: '{{ ui_deploy_to }}/{{ ui_deploy_version }}'
+ui_repository: 'git@github.com:sourcestream/{{ ui_app }}.git'
+ui_credentials_file: '{{ credentials_file | default("") }}'
+ui_known_hosts: '{{ repository_host_key }}'
+ui_basic_auth: ''
+ui_api_host: '127.0.0.1'
+ui_api_url: 'http://{{ ui_api_host }}'
+ui_vhost_template: roles/ui/templates/webserver/vhost.j2

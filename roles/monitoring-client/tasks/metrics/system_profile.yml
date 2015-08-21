@@ -1,0 +1,9 @@
+- name: clone community-plugins
+  git: repo=https://github.com/synchrone/sensu-plugins-system-profile.git depth=1
+    dest=/opt/sensu-system-profile/
+    version="{{ sensu_system_profile_version }}" update=no
+
+- name: symlink system-profile
+  file: state=link
+    path=/etc/sensu/extensions/checks/system_profile.rb
+    src=/opt/sensu-system-profile/bin/extension-system-profile.rb

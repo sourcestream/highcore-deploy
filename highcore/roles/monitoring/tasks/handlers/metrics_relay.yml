@@ -1,0 +1,15 @@
+---
+- name: clone metrics-relay
+  git: repo=https://github.com/opower/sensu-metrics-relay.git
+    dest=/opt/sensu-metrics-relay version={{ sensu_metrics_relay_version }}
+
+- name: symlink relay handler
+  file: state=link
+    src=/opt/sensu-metrics-relay/lib/sensu/extensions/handlers/relay.rb
+    dest=/etc/sensu/extensions/handlers/relay.rb
+
+
+- name: symlink metrics mutator
+  file: state=link
+    src=/opt/sensu-metrics-relay/lib/sensu/extensions/mutators/metrics.rb
+    dest=/etc/sensu/extensions/mutators/metrics.rb

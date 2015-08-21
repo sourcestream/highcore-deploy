@@ -1,0 +1,7 @@
+---
+- hosts: all
+  sudo: yes
+  vars:
+    ui_deploy_version: develop
+  roles:
+    - role: '../../ui'

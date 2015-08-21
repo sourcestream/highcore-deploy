@@ -1,0 +1,51 @@
+---
+- name: Create deploy user
+  user: name={{ deploy_user }} createhome=no home={{ deploy_to }}
+
+- name: Create temp directory for artifacts
+  file:
+    path: '{{ deploy_temp_dir }}'
+    state: directory
+    owner: root
+    group: root
+    mode: o+w
+  when: packaging not in ['none']
+
+- name: Load credentials
+  include_vars: "{{ deploy_credentials_file }}"
+  no_log: True
+  when: deploy_credentials_file is defined and deploy_credentials_file
+
+# Use s3 repository
+- include: repository/s3.yml
+  when: repository.startswith('s3://')
+
+# Use git repository
+- include: repository/git.yml
+  when: repository.endswith('git')
+
+- name: Check remote artifact
+  stat: path={{ deploy_temp_dir }}/{{ deploy_version }}.{{ packaging }}
+  register: artifact_remote
+  when: packaging not in ['none']
+
+- name: Check local artifact
+  stat: path={{ deploy_to }}/{{ deploy_version }}.{{ packaging }}
+  register: artifact_local
+  when: packaging not in ['none']
+
+- name: Compare artifacts
+  set_fact: artifact_updated={{ not (artifact_local.stat.exists and artifact_local.stat.checksum == artifact_remote.stat.checksum) }}
+  when: packaging not in ['none']
+
+- name: Update artifact
+  command: mv {{ deploy_temp_dir }}/{{ deploy_version }}.{{ packaging }} {{ deploy_to }}/{{ deploy_version }}.{{ packaging }}
+  when: artifact_updated
+  when: packaging not in ['none']
+
+- name: Check if deployment is required
+  set_fact: deployment_required={{ artifact_updated or deploy_forced }}
+  when: packaging not in ['none']
+
+- include: deploy.yml
+  when: deployment_required is defined and deployment_required

@@ -1,0 +1,14 @@
+---
+api_app: highcore-api
+api_user: '{{ api_app }}'
+api_deploy_to: '/srv/{{ api_app }}'
+api_deploy_version: 'master'
+api_deploy_to_version: '{{ api_deploy_to }}/{{ api_deploy_version }}'
+api_config_dir: '{{ api_deploy_to_version }}'
+api_repository: 'git@github.com:sourcestream/{{ api_app }}.git'
+api_credentials_file: '{{ credentials_file }}'
+api_env_template: env.j2
+api_known_hosts: '{{ repository_host_key }}'
+api_vhost_template: roles/api/templates/webserver/vhost.j2
+api_basic_auth: ''
+api_monitoring_hostname: ''

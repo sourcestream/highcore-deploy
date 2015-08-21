@@ -1,0 +1,18 @@
+---
+sensu_metrics_relay_version: 5de5b5259694664c1a155e2d6ae59898fc24979a #master as of 5.05.2015
+sensu_plugins_graphite_version: master #let it stabilize for now
+
+monitoring_rabbitmq_port: 5671
+#TODO: this value is hardcoded in dependencies due to evaluation error
+#monitoring_rabbitmq_secure: false
+monitoring_rabbitmq_vhost: '/sensu'
+monitoring_rabbitmq_user: sensu
+monitoring_rabbitmq_password: placeholder
+
+monitoring_dashboard_port: 3000
+monitoring_dashboard_user: sensu
+monitoring_dashboard_password: ""
+
+monitoring_api_user: sensu
+monitoring_api_password: "sensu"
+

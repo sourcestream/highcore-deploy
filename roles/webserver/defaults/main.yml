@@ -1,0 +1,4 @@
+---
+webserver_deploy_group: www-data
+webserver_basic_auth: ''
+webserver_port: 80

@@ -1,0 +1,6 @@
+metrics_anonymous_enabled: yes
+metris_graphite_port: 3001
+metrics_admin_password: admin
+metrics_dashboard_port: 3002
+metrics_grafana_data: /var/lib/grafana
+metrics_grafana_path: grafana.db

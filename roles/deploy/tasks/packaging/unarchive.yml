@@ -1,0 +1,11 @@
+- name: Install unzip
+  action: '{{ ansible_pkg_mgr }} pkg={{ item }}'
+  with_items:
+    - unzip
+
+- name: Unpack deployment package
+  unarchive: src={{ deploy_to }}/{{ deploy_version }}.{{ packaging }}
+             dest={{ deploy_to }}
+             copy=no
+             owner={{ deploy_user }}
+             group={{ deploy_group }}

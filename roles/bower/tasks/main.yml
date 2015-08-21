@@ -1,0 +1,5 @@
+---
+- name: Install packages
+  npm:
+    name: bower
+    global: yes

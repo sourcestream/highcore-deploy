@@ -1,0 +1,13 @@
+---
+- name: Install pip
+  action: '{{ ansible_pkg_mgr }} pkg={{ item }}'
+  with_items:
+    - python-pip
+
+- name: Install aws cli
+  pip: name=awscli
+
+- name: Download artifact
+  shell: aws s3 sync {{ repository }} {{ deploy_temp_dir }}/ --exclude "*" --include "{{ deploy_version }}.{{ packaging }}"
+  register: sync_result
+  changed_when: sync_result.stdout.find('Completed 0 part') != -1

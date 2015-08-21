@@ -1,0 +1,19 @@
+---
+scm_url: https://github.com/WordPress/WordPress.git
+wordpress_port: 80
+wordpress_version: 4.2.2
+wordpress_mysql_host: localhost
+wordpress_mysql_user: root
+wordpress_mysql_db: wordpress
+wordpress_mysql_prefix: wp_
+wordpress_mysql_password: #required
+wordpress_basic_auth: ''
+wordpress_deploy_to: '/srv/wordpress'
+wordpress_root: '/srv/wordpress/public'
+wordpress_create_db: yes
+
+wordpress_title: wordpress
+wordpress_url: http://wordpress
+wordpress_admin_user: admin
+wordpress_admin_password: wordpress
+wordpress_admin_email: admin@example.org

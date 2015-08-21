@@ -1,0 +1,10 @@
+---
+- name: Install dependencies
+  action: "{{ ansible_pkg_mgr }} pkg={{ item }}"
+  with_items:
+    - php5-fpm
+  notify:
+    - restart php5-fpm
+
+- include: xdebug.yml
+  when: php5fpm_xdebug

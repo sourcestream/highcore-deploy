@@ -1,0 +1,11 @@
+- src: https://github.com/sourcestream/ansible-playbook-sensu
+  name: Mayeu.sensu
+- src: https://github.com/sourcestream/ansible-playbook-rabbitmq
+  name: Mayeu.RabbitMQ
+- src: https://github.com/sourcestream/ansible-redis
+  name: DavidWittman.redis
+- src: https://github.com/sourcestream/ansible-graphite
+  version: bb432d5da53c00e21e4e291067ce80cb1debd1aa
+  name: nsg.graphite
+- src: https://github.com/sourcestream/Stouts.grafana
+  name: Stouts.grafana

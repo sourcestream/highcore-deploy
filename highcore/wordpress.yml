@@ -1,0 +1,7 @@
+---
+- hosts: wordpress:tag_role_wordpress
+  tags:
+    - wordpress
+  sudo: yes
+  roles:
+    - wordpress

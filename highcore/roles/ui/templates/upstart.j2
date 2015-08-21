@@ -1,0 +1,17 @@
+description "{{ ui_app }} node.js app"
+
+stop on shutdown
+respawn
+respawn limit 20 5
+
+# Max open files are @ 1024 by default. Bit few.
+limit nofile 32768 32768
+
+script
+  set -e
+  exec sudo -u {{ ui_user }} highcoreAPIUrl={{ ui_api_url }} /usr/bin/node {{ ui_deploy_to }}/{{ ui_deploy_version }}/server.js 2>&1
+end script
+
+post-start script
+
+end script

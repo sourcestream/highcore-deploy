@@ -1,0 +1,9 @@
+---
+- name: Clean paths
+  file: path={{ deploy_to }}/{{ deploy_version }}/{{ item }} state=absent
+  with_items: clean_paths
+
+- name: Create deployment directory
+  file: path={{ deploy_to }} state=directory owner={{ deploy_user }} group={{ deploy_group }}
+
+

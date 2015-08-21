@@ -1,0 +1,35 @@
+---
+allow_duplicates: yes
+dependencies:
+  - role: '{{ playbook_dir }}/roles/deploy'
+    deploy_user: "{{ api_user }}"
+    deploy_to: "{{ api_deploy_to }}"
+    deploy_version: "{{ api_deploy_version }}"
+    deploy_repository: "{{ api_repository }}"
+    deploy_known_hosts: "{{ api_known_hosts }}"
+  - role: '{{ playbook_dir }}/roles/composer'
+  - role: '{{ playbook_dir }}/roles/php5-fpm'
+  - role: '{{ playbook_dir }}/roles/webserver'
+    webserver_root: "{{ api_deploy_to }}/{{ api_deploy_version }}/public"
+    webserver_vhost: "{{ api_app }}"
+    webserver_vhost_file: "{{ api_vhost_template }}"
+    webserver_basic_auth: "{{ api_basic_auth }}"
+
+  - role: templates
+    templates_user: "{{ api_user }}"
+
+  - role: '{{ playbook_dir }}/roles/monitoring-client'
+    tags: monitoring-client
+    monitoring_hostname: "{{ api_monitoring_hostname }}"
+    standalone_checks:
+       test_check:
+        handler   : default
+        command   : "/bin/bash -c 'echo Hello World'"
+        interval  : 60
+        standalone: true
+    system_profile: true
+    client_settings:
+      system_profile:
+        interval: 10
+        handler: 'relay'
+    when: api_monitoring_hostname is defined and api_monitoring_hostname

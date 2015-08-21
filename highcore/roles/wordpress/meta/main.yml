@@ -1,0 +1,11 @@
+---
+allow_duplicates: yes
+dependencies:
+  - role: '{{ playbook_dir }}/roles/php-webapp'
+    php_webapp_app: wordpress
+    php_webapp_repository: '{{ scm_url }}'
+    php_webapp_deploy_to: '{{ wordpress_deploy_to }}'
+    php_webapp_deploy_version: '{{ wordpress_version }}'
+    php_webapp_root: '{{ wordpress_root }}'
+    php_webapp_port: '{{ wordpress_port }}'
+    php_webapp_basic_auth: '{{ wordpress_basic_auth }}'

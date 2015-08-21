@@ -1,0 +1,49 @@
+---
+- name: set up wp-config.php
+  template:
+    src: wp-config.php.j2
+    dest: '{{ wordpress_root }}/wp-config.php'
+    group: www-data
+    mode: g+rwX
+
+- name: get wp-cli
+  get_url:
+    url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    dest: '{{ wordpress_deploy_to }}/wp-cli.phar'
+  sudo_user: wordpress
+
+- name: Install dependencies
+  action: "{{ ansible_pkg_mgr }} pkg={{ item }}"
+  with_items:
+    - mysql-client
+  when: wordpress_create_db
+
+- name: create db
+  command: chdir="{{ wordpress_root }}" php "{{ wordpress_deploy_to }}"/wp-cli.phar db create
+  sudo_user: wordpress
+  register: create_db
+  failed_when: (create_db.rc == 1 and create_db.stderr.find('database exists') == -1) and create_db.stdout.find('Database created') == -1
+  changed_when: create_db.stdout.find('Database created') != -1
+
+- name: check if wp is installed
+  command: chdir="{{ wordpress_root }}" php "{{ wordpress_deploy_to }}"/wp-cli.phar core is-installed
+  sudo_user: wordpress
+  failed_when: "is_installed.stderr != ''"
+  register: is_installed
+
+- name: install wordpress
+  command: >
+    chdir="{{ wordpress_root }}"
+    php {{ wordpress_deploy_to }}/wp-cli.phar core install
+    --url="{{ wordpress_url }}"
+    --title="{{ wordpress_title }}"
+    --admin_user="{{ wordpress_admin_user }}"
+    --admin_password="{{ wordpress_admin_password }}"
+    --admin_email="{{ wordpress_admin_email }}"
+  sudo_user: wordpress
+  when: is_installed.rc != 0
+
+- copy: src=wp-set-url.sh dest={{ wordpress_deploy_to }}/wp-set-url.sh mode=0775
+- name: update wp url
+  command: chdir="{{ wordpress_root }}" {{ wordpress_deploy_to }}/wp-set-url.sh {{ wordpress_mysql_db }} {{ wordpress_url }} {{ wordpress_deploy_to }}
+  sudo_user: wordpress

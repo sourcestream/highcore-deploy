@@ -1,0 +1,10 @@
+---
+deploy_group: "{{ deploy_user }}"
+deploy_forced: false
+deploy_temp_dir: /tmp/deploy
+deploy_credentials_file: '{{ credentials_file | default("") }}'
+deploy_git_update: 'True'
+repository: git
+packaging: none
+clean_paths:
+  - '/'

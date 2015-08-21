@@ -1,0 +1,9 @@
+---
+- hosts: monitoring:tag_role_monitoring
+  tags:
+    - monitoring
+  sudo: yes
+  roles:
+    - monitoring
+    - role: metrics-server
+      tags: metrics

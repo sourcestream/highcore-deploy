@@ -1,0 +1,7 @@
+---
+- hosts: ui:tag_role_ui
+  tags:
+    - ui
+  sudo: yes
+  roles:
+    - ui
