@@ -1,11 +1,11 @@
 ---
 allow_duplicates: yes
 dependencies:
-  - role: '{{ playbook_dir }}/vendor/DavidWittman.redis'
+  - role: DavidWittman.redis
     tags: [redis, sensu-server]
     redis_bind: localhost
 
-  - role: '{{ playbook_dir }}/vendor/Mayeu.RabbitMQ'
+  - role: Mayeu.RabbitMQ
     tags: [rabbitmq, sensu-server]
     rabbitmq_conf_tcp_listeners_address: '0.0.0.0' # sensu-clients will connect there
     rabbitmq_ssl: false
@@ -19,7 +19,7 @@ dependencies:
         tags: ["administrator"]
     rabbitmq_plugins: ['rabbitmq_management']
 
-  - role: '{{ playbook_dir }}/vendor/Mayeu.sensu'
+  - role: Mayeu.sensu
     tags: [sensu, sensu-server]
     sensu_install_client: false #uchiwa and server are installed by default
 
@@ -46,7 +46,7 @@ dependencies:
           host: localhost #TODO: this is going to cause trouble if\when we separate metrics-server and monitoring
           port: 2003
 
-  - role: '{{ playbook_dir }}/roles/monitoring-client'
+  - role: monitoring-client
     tags: monitoring-client
     monitoring_hostname: "localhost"
     standalone_checks:

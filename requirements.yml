@@ -8,3 +8,5 @@
   name: nsg.graphite
 - src: https://github.com/sourcestream/Stouts.grafana
   name: Stouts.grafana
+- src: https://github.com/sourcestream/ansible-monitoring-client
+  name: monitoring-client

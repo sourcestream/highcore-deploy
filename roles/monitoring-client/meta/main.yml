@@ -1,7 +1,7 @@
 ---
 allow_duplicates: yes
 dependencies:
-  - role: ../vendor/Mayeu.sensu
+  - role: Mayeu.sensu
     sensu_install_server: false
     sensu_install_uchiwa: false
 

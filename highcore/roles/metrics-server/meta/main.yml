@@ -1,11 +1,11 @@
 ---
 allow_duplicates: yes
 dependencies:
-  - role: ../../vendor/nsg.graphite
+  - role: nsg.graphite
     tags: [graphite]
     graphite_secret_key: "{{ lookup('password', '/tmp/graphite_secret_key') }}"
 
-  - role: ../../vendor/Stouts.grafana
+  - role: Stouts.grafana
     tags: [grafana]
     grafana_reporting_enabled: no
     grafana_http_port: "{{ metrics_dashboard_port }}"

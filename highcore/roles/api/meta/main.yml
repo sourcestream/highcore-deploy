@@ -18,7 +18,7 @@ dependencies:
   - role: templates
     templates_user: "{{ api_user }}"
 
-  - role: '{{ playbook_dir }}/roles/monitoring-client'
+  - role: monitoring-client
     tags: monitoring-client
     monitoring_hostname: "{{ api_monitoring_hostname }}"
     standalone_checks:
