@@ -9,7 +9,7 @@ limit nofile 32768 32768
 
 script
   set -e
-  exec sudo -u {{ ui_user }} highcoreAPIUrl={{ ui_api_url }} /usr/bin/node {{ ui_deploy_to }}/{{ ui_deploy_version }}/server.js 2>&1
+  exec sudo -u {{ ui_user }} node --harmony_arrow_functions --harmony_modules --harmony_strings {{ ui_deploy_to }}/{{ ui_deploy_version }}/index.js --domain={{ ui_domain }} --endpoint={{ ui_api_url }} 2>&1
 end script
 
 post-start script
