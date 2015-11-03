@@ -1,7 +1,0 @@
-{
-   "client": {
-      "name": "{{ monitoring_hostname }}",
-      "address": "{{ ansible_default_ipv4['address'] }}",
-      "subscriptions": [ "{{ "\",\"".join(client_subscription_names) }}" ]
-   }
-}

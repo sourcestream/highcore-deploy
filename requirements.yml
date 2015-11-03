@@ -10,3 +10,10 @@
   name: Stouts.grafana
 - src: https://github.com/sourcestream/ansible-monitoring-client
   name: monitoring-client
+  version: v1.0.1
+- src: https://github.com/sourcestream/ansible-monitoring-server
+  name: monitoring-server
+  version: v1.0.0
+- src: https://github.com/sourcestream/ansible-metrics-server
+  name: metrics-server
+  version: v1

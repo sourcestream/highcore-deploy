@@ -1,3 +1,0 @@
----
-- name: install graphite checks
-  gem: executable=/opt/sensu/embedded/bin/gem name=sensu-plugins-graphite state=present
