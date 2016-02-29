@@ -15,9 +15,6 @@ dependencies:
     webserver_vhost_file: "{{ api_vhost_template }}"
     webserver_basic_auth: "{{ api_basic_auth }}"
 
-  - role: templates
-    templates_user: "{{ api_user }}"
-
   - role: monitoring-client
     tags: monitoring-client
     monitoring_hostname: "{{ api_monitoring_hostname }}"

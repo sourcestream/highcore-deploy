@@ -1,5 +1,0 @@
----
-- name: Install sparkle gems
-  command: 'bundle'
-  args:
-    chdir: '{{ templates_deploy_to_version }}'

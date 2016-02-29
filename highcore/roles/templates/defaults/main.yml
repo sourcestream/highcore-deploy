@@ -1,9 +1,0 @@
----
-templates_app: highcore-templates
-templates_user: '{{ templates_app }}'
-templates_deploy_to: '/srv/{{ templates_app }}'
-templates_deploy_version: 'master'
-templates_deploy_to_version: '{{ templates_deploy_to }}/{{ templates_deploy_version }}'
-templates_repository: 'git@github.com:sourcestream/{{ templates_app }}.git'
-templates_credentials_file: '{{ credentials_file }}'
-templates_known_hosts: '{{ repository_host_key }}'
