@@ -1,16 +1,16 @@
 ---
 allow_duplicates: yes
 dependencies:
-  - role: '{{ playbook_dir }}/roles/deploy'
+  - role: '{{ playbook_dir }}/../roles/deploy'
     deploy_user: "{{ ui_user }}"
     deploy_to: "{{ ui_deploy_to }}"
     deploy_version: "{{ ui_deploy_version }}"
     deploy_repository: "{{ ui_repository }}"
     deploy_known_hosts: "{{ ui_known_hosts }}"
-  - role: '{{ playbook_dir }}/roles/bower'
-  - role: '{{ playbook_dir }}/roles/grunt'
-  - role: '{{ playbook_dir }}/roles/compass'
-  - role: '{{ playbook_dir }}/roles/webserver'
+  - role: '{{ playbook_dir }}/../roles/bower'
+  - role: '{{ playbook_dir }}/../roles/grunt'
+  - role: '{{ playbook_dir }}/../roles/compass'
+  - role: '{{ playbook_dir }}/../roles/webserver'
     webserver_vhost: "{{ ui_app }}"
     webserver_vhost_file: "{{ ui_vhost_template }}"
     webserver_basic_auth: "{{ ui_basic_auth }}"

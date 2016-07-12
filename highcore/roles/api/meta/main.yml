@@ -1,15 +1,15 @@
 ---
 allow_duplicates: yes
 dependencies:
-  - role: '{{ playbook_dir }}/roles/deploy'
+  - role: '{{ playbook_dir }}/../roles/deploy'
     deploy_user: "{{ api_user }}"
     deploy_to: "{{ api_deploy_to }}"
     deploy_version: "{{ api_deploy_version }}"
     deploy_repository: "{{ api_repository }}"
     deploy_known_hosts: "{{ api_known_hosts }}"
-  - role: '{{ playbook_dir }}/roles/composer'
-  - role: '{{ playbook_dir }}/roles/php5-fpm'
-  - role: '{{ playbook_dir }}/roles/webserver'
+  - role: '{{ playbook_dir }}/../roles/composer'
+  - role: '{{ playbook_dir }}/../roles/php5-fpm'
+  - role: '{{ playbook_dir }}/../roles/webserver'
     webserver_root: "{{ api_deploy_to }}/{{ api_deploy_version }}/public"
     webserver_vhost: "{{ api_app }}"
     webserver_vhost_file: "{{ api_vhost_template }}"

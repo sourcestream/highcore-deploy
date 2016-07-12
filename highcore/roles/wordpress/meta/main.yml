@@ -1,7 +1,7 @@
 ---
 allow_duplicates: yes
 dependencies:
-  - role: '{{ playbook_dir }}/roles/php-webapp'
+  - role: '{{ playbook_dir }}/../roles/php-webapp'
     php_webapp_app: wordpress
     php_webapp_repository: '{{ scm_url }}'
     php_webapp_deploy_to: '{{ wordpress_deploy_to }}'
