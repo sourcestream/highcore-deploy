@@ -1,0 +1,11 @@
+server {
+  # Redirect any http requests to https
+  listen     80;
+  location ~ .well-known/acme-challenge/ {
+      root /var/www/letsencrypt;
+      default_type text/plain;
+  }
+  location / {
+    return 301     https://$host$request_uri;
+  }
+}

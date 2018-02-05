@@ -1,7 +1,10 @@
 # {{ ansible_managed }}
 
 server {
-    listen 80;
+    listen 443 ssl;
+
+    ssl_certificate     /etc/letsencrypt/live/{{ ui_domain }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ ui_domain }}/privkey.pem;
 
 {% if webserver_basic_auth != '' %}
     auth_basic 'restricted';

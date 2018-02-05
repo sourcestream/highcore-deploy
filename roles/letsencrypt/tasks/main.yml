@@ -1,0 +1,10 @@
+---
+- name: Install packages
+  action: '{{ ansible_pkg_mgr }} pkg={{ item }}'
+  with_items:
+    - letsencrypt
+
+- name: Create letsencrypt webroot directory.
+  file:
+    path: /var/www/letsencrypt
+    state: directory

@@ -23,3 +23,12 @@
     dest: '/etc/init/{{ ui_app }}.conf'
     mode: 0700
   notify: restart ui
+
+- name: Check if ssl configuration exists
+  stat:
+    path: "/etc/letsencrypt/live/{{ ui_domain }}/fullchain.pem"
+  register: ssl_certificate_status
+
+- name: Configure ssl
+  include: ssl.yml
+  when: not ssl_certificate_status.stat.exists

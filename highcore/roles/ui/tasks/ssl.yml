@@ -1,0 +1,35 @@
+---
+- name: Disable vhost
+  file:
+    path: "/etc/nginx/sites-enabled/{{ ui_app }}"
+    state: absent
+
+- name: Reload nginx
+  service:
+    name: nginx
+    state: reloaded
+
+- name: Request ssl certificate
+  command:
+    letsencrypt certonly --webroot --webroot-path /var/www/letsencrypt
+      --domains {{ ui_domain }}
+      --email admin@{{ ui_domain }}
+      --agree-tos
+  args:
+    creates: "/etc/letsencrypt/live/{{ ui_domain }}/fullchain.pem"
+
+- name: Enable vhost
+  file:
+    src: "/etc/nginx/sites-available/{{ ui_app }}"
+    dest: "/etc/nginx/sites-enabled/{{ ui_app }}"
+    state: link
+  notify:
+    - restart nginx
+
+- name: Schedule certificate renewal
+  cron:
+    name: Renew certificates
+    minute: 47
+    hour: 0-6/3
+    user: root
+    job: /usr/bin/letsencrypt renew --no-self-upgrade --agree-tos >/dev/null && systemctl reload nginx
