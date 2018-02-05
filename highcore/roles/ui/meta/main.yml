@@ -1,6 +1,7 @@
 ---
 allow_duplicates: yes
 dependencies:
+  - role: '{{ playbook_dir }}/../roles/letsencrypt'
   - role: '{{ playbook_dir }}/../roles/deploy'
     deploy_user: "{{ ui_user }}"
     deploy_to: "{{ ui_deploy_to }}"

@@ -8,3 +8,17 @@
   file:
     path: /var/www/letsencrypt
     state: directory
+
+- name: Create nginx config file
+  template:
+    src: vhost.conf.j2
+    dest: /etc/nginx/sites-available/letsencrypt
+  notify:
+  - restart nginx
+
+- name: Enable vhost
+  file: src=/etc/nginx/sites-available/letsencrypt
+        dest=/etc/nginx/sites-enabled/letsencrypt
+        state=link
+  notify:
+  - restart nginx

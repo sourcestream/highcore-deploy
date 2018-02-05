@@ -1,5 +1,0 @@
-allow_duplicates: yes
-dependencies:
-  - role: webserver
-    vhost: letsencrypt
-    vhost_file: 'roles/letsencrypt/templates/vhost.conf.j2'
