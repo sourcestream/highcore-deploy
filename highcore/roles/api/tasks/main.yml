@@ -54,3 +54,12 @@
 #  sudo: yes
 #  sudo_user: '{{ api_user }}'
 #  when: deployment_required and api_migration_strategy == 'Update'
+
+- name: Check if ssl configuration exists
+  stat:
+    path: "/etc/letsencrypt/live/{{ api_domain }}/fullchain.pem"
+  register: ssl_certificate_status
+
+- name: Configure ssl
+  include: ssl.yml
+  when: not ssl_certificate_status.stat.exists

@@ -9,5 +9,5 @@ ui_credentials_file: '{{ credentials_file | default("") }}'
 ui_known_hosts: '{{ repository_host_key }}'
 ui_basic_auth: ''
 ui_api_host: '127.0.0.1'
-ui_api_url: 'http://{{ ui_api_host }}'
+ui_api_url: 'https://{{ ui_api_host }}'
 ui_vhost_template: roles/ui/templates/webserver/vhost.j2
