@@ -32,4 +32,4 @@
     minute: 47
     hour: 0-6/3
     user: root
-    job: /usr/bin/letsencrypt renew --no-self-upgrade --agree-tos >/dev/null && systemctl reload nginx
+    job: /usr/bin/letsencrypt renew --no-self-upgrade --agree-tos >/dev/null && /usr/sbin/service nginx reload
