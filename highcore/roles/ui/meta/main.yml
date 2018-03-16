@@ -1,7 +1,6 @@
 ---
 allow_duplicates: yes
 dependencies:
-  - role: '{{ playbook_dir }}/../roles/letsencrypt'
   - role: '{{ playbook_dir }}/../roles/deploy'
     deploy_user: "{{ ui_user }}"
     deploy_to: "{{ ui_deploy_to }}"
@@ -15,3 +14,4 @@ dependencies:
     webserver_vhost: "{{ ui_app }}"
     webserver_vhost_file: "{{ ui_vhost_template }}"
     webserver_basic_auth: "{{ ui_basic_auth }}"
+  - role: '{{ playbook_dir }}/../roles/letsencrypt'
