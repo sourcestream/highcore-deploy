@@ -15,6 +15,7 @@ dependencies:
     webserver_vhost_file: "{{ api_vhost_template }}"
     webserver_basic_auth: "{{ api_basic_auth }}"
   - role: '{{ playbook_dir }}/../roles/letsencrypt'
+  - role: '{{ playbook_dir }}/../roles/docker'
 
   - role: monitoring-client
     tags: monitoring-client

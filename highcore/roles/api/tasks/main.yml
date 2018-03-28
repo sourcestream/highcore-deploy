@@ -63,3 +63,10 @@
 - name: Configure ssl
   include: ssl.yml
   when: not ssl_certificate_status.stat.exists
+
+- name: Adding user www-data to group docker
+  user:
+    name: www-data
+    groups: docker
+    append: yes
+  notify: restart php5-fpm
